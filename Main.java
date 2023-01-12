@@ -1,7 +1,8 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         String in = sc.nextLine();
         String[] personData = in.split(" ");
@@ -14,5 +15,6 @@ public class Main {
                 .setPhoneNumber(Long.parseLong(personData[5]))
                 .build();
         System.out.println(person.getFio());
+        WorkWithFiles.writeToFile(person);
     }
 }
