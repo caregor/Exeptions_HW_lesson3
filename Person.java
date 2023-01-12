@@ -63,7 +63,9 @@ public class Person {
     }
 
     public void setPhoneNumber(Long phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        if(phoneNumber > 0 ){
+            this.phoneNumber = phoneNumber;
+        }else throw new RuntimeException("A Phone number must be > 0");
     }
 
     public void setGender(@NotNull String gender) {
