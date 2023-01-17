@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 public class Person {
@@ -25,41 +27,31 @@ public class Person {
     }
     public Person(){}
 
-    public String getFio(){
-        String fio = surname + " " + name + " " + patronymic;
-        return fio;
-    }
-
-    public String getFioShort(){
-        char name1 = name.charAt(0);
-        char patronymic1 = patronymic.charAt(0);
-
-        String fioS = surname + " " + name1 + ". " + patronymic1 + ".";
-        return fioS;
-    }
-
-    public int getAge() throws ParseException {
-        Date birthDate = new SimpleDateFormat( "dd.MM.yyyy" ).parse(dateOfBirth);
-        LocalDate localDateBirth = birthDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate dateNow = LocalDate.now();
-        int age = Period.between(localDateBirth, dateNow).getYears();
-        return age;
-    }
-
     public void setName(String name) {
-        this.name = name;
+        if (!Helper.isDigit(name)) this.name = name;
+        else throw new NumberFormatException("В имени не должно быть цифр");
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        if (!Helper.isDigit(surname)) this.surname = surname;
+        else throw new NumberFormatException("В фамилии не должно быть цифр");
     }
 
     public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
+        if (!Helper.isDigit(patronymic)) this.patronymic = patronymic;
+        else throw new NumberFormatException("В отчестве не должно быть цифр");
     }
 
     public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.yyyy");
+            LocalDate date = LocalDate.parse(dateOfBirth, formatter);
+            this.dateOfBirth = String.valueOf(date);
+        }
+        // если шаблон недействителен // если текст не может быть проанализирован
+        catch (IllegalArgumentException | DateTimeParseException ex) {
+            System.out.println("Неверный формат даты. Дата должна быть в формате dd.mm.yyyy");
+        }
     }
 
     public void setPhoneNumber(Long phoneNumber) {
@@ -76,6 +68,5 @@ public class Person {
         }else {
             throw new RuntimeException("Gender must be only 'f' or 'm'");
         }
-     //   this.gender = gender;
     }
 }
