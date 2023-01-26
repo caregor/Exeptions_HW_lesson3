@@ -46,7 +46,7 @@ public class Person {
         }
         // если шаблон недействителен // если текст не может быть проанализирован
         catch (IllegalArgumentException | DateTimeParseException ex) {
-            System.out.println("Неверный формат даты. Дата должна быть в формате dd.mm.yyyy");
+            throw new RuntimeException("Неверный формат даты. Дата должна быть в формате dd.mm.yyyy");
         }
     }
 
