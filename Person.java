@@ -1,13 +1,9 @@
 import org.jetbrains.annotations.NotNull;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
+
 
 public class Person {
     protected String surname;
@@ -29,17 +25,17 @@ public class Person {
 
     public void setName(String name) {
         if (!Helper.isDigit(name)) this.name = name;
-        else throw new NumberFormatException("В имени не должно быть цифр");
+        else throw new IllegalArgumentException("В имени не должно быть цифр");
     }
 
     public void setSurname(String surname) {
         if (!Helper.isDigit(surname)) this.surname = surname;
-        else throw new NumberFormatException("В фамилии не должно быть цифр");
+        else throw new IllegalArgumentException("В фамилии не должно быть цифр");
     }
 
     public void setPatronymic(String patronymic) {
         if (!Helper.isDigit(patronymic)) this.patronymic = patronymic;
-        else throw new NumberFormatException("В отчестве не должно быть цифр");
+        else throw new IllegalArgumentException("В отчестве не должно быть цифр");
     }
 
     public void setDateOfBirth(String dateOfBirth) {

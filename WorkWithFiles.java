@@ -1,12 +1,12 @@
-import java.io.EOFException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class WorkWithFiles {
     public static void writeToFile(Person person) throws IOException {
         String path = "./"+person.surname+".txt";
-        try (FileOutputStream output = new FileOutputStream(path, true)){
+        try (FileOutputStream fileStream = new FileOutputStream(path, true)){
             // <Фамилия><Имя><Отчество><датарождения><номертелефона><пол>
             String source ="<"+person.surname+"><"
                             +person.name+"><"
@@ -15,11 +15,11 @@ public class WorkWithFiles {
                             +person.phoneNumber+"><"
                             +person.gender+">\n";
             byte[] data = source.getBytes();
-            output.write(data);
-        } catch (IOException e) {
+            fileStream.write(data);
+        } catch (FileNotFoundException e) {
             File file = new File(path);
             file.createNewFile();
-            FileOutputStream s = new FileOutputStream(file, false);
+            FileOutputStream newFileStream = new FileOutputStream(file, false);
             String source = "<" + person.surname + "><"
                     + person.name + "><"
                     + person.patronymic + "><"
@@ -27,8 +27,9 @@ public class WorkWithFiles {
                     + person.phoneNumber + "><"
                     + person.gender + ">";
             byte[] data = source.getBytes();
-            s.write(data);
-            throw new RuntimeException(e);
+            newFileStream.write(data);
+        }catch (IOException exp){
+            exp.printStackTrace();
         }
     }
 }
